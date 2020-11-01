@@ -39,7 +39,7 @@ public class Bird : MonoBehaviour
             transform.position.x < -20 ||
             _timeSittingAround   >   3    )
         {
-            if (!_levelController.hasWon) {
+            if (!_levelController.HasWonLevel) {
                 string currentSceneName = SceneManager.GetActiveScene().name;
                 SceneManager.LoadScene(currentSceneName);
             }   
@@ -49,12 +49,16 @@ public class Bird : MonoBehaviour
   
     private void OnMouseDown()
     {
+        if (Time.timeScale == 0)
+            return;
         GetComponent<LineRenderer>().enabled = true;
         GetComponent<SpriteRenderer>().color = new Color(202f/255f, 114f/255f, 24f/255f);
     }
 
     private void OnMouseUp()
     {
+        if (Time.timeScale == 0)
+            return;
         _animator.speed = 1;
         GetComponent<LineRenderer>().enabled = false;
         GetComponent<SpriteRenderer>().color = Color.white;
@@ -68,6 +72,8 @@ public class Bird : MonoBehaviour
 
     private void OnMouseDrag()
     {
+        if (Time.timeScale == 0)
+            return;
         _animator.speed = 0.1f;
         Vector3 newPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         if (newPosition.x < -11) 
